@@ -25,7 +25,7 @@ namespace brightIdeas.Controllers
         {
             string user_em = HttpContext.Session.GetString("email");
             User logUser = dbContext.Users.SingleOrDefault(u => u.Email == user_em);
-            List<Idea> ideaList = dbContext.Ideas.Include(i => i.creator).Include(i => i.likes).ThenInclude(l => l.theUser).ToList();
+            List<Idea> ideaList = dbContext.Ideas.Include(i => i.creator).Include(i => i.likes).ThenInclude(l => l.theUser).OrderByDescending(i => i.likes.Count()).ToList();
             IdeaVM info = new IdeaVM()
             {
                 thisUser = logUser,
